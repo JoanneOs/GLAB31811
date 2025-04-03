@@ -63,32 +63,86 @@
 /////quote generator/////
 ///////////////////////
 
+// File: index.js
+
+// STEP 1: Initialize project (already done via npm init -y)
+// This created package.json
+
+// STEP 2: Added scripts to package.json
+/*
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+*/
+
+// STEP 3: Installed nodemon (already done via npm i --save-dev nodemon)
+// This created package-lock.json and added nodemon to devDependencies
+
+// STEP 4: Creating a Server
 const http = require('http');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-// Create server
+// Create server with multiple routes
 const server = http.createServer((req, res) => {
-    // Set headers to ensure correct content type
-    res.setHeader('Content-Type', 'text/html');
-
-    // Random Trucking Quote Generator
-  if (req.url === '/quote') {
+  res.setHeader('Content-Type', 'text/html');
+  
+  // Home route
+  if (req.url === '/') {
+    res.statusCode = 200;
+    res.end(`
+      <h1 style="color: red">Hello World!</h1>
+      <p>I wonder what else we can send...</p>
+      <p>Try these routes:</p>
+      <ul>
+        <li><a href="/quote">/quote</a> - Random trucking quote</li>
+        <li><a href="/plain">/plain</a> - Plain text version</li>
+      </ul>
+    `);
+  }
+  
+  // Plain text version
+  else if (req.url === '/plain') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('my first nodejs');
+  }
+  
+  // Random Trucking Quote Generator
+  else if (req.url === '/quote') {
+    res.statusCode = 200;
     const quotes = [
       "Life is a journey, enjoy the ride.",
       "The road to success is always under construction.",
-      "Truck drivers are the backbone of the economy."
+      "Truck drivers are the backbone of the economy.",
+      "Keep truckin' like the Doo-Dah Man!",
+      "No one ever said trucking was easy, but it's worth it."
     ];
-
-    //The code generates a random quote from an array and displays it on the /quote route when accessed in the browser.
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    res.end(`<blockquote>"${randomQuote}"</blockquote>`);
-  });
+    res.end(`
+      <h1>Trucking Quote of the Day</h1>
+      <blockquote style="font-size: 24px; color: blue;">"${randomQuote}"</blockquote>
+      <a href="/">Back to Home</a>
+    `);
+  }
+  
+  // 404 Not Found
+  else {
+    res.statusCode = 404;
+    res.end(`
+      <h1>404 Not Found</h1>
+      <p>The page you requested doesn't exist.</p>
+      <a href="/">Back to Home</a>
+    `);
+  }
+});
 
-  // Server listening on port 3000
-server.listen(3000, () => {
-    console.log('Server is running at http://localhost:3000');
-  });
+// Start the server
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
 
-  //i did file save then nodemon index.js
-  //error missing bra
+// To run:
+// npm start       - runs with Node (node index.js)
+// npm run dev     - runs with nodemon (auto-restarts on changes)
