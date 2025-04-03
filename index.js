@@ -72,4 +72,10 @@ const server = http.createServer((req, res) => {
     // Set headers to ensure correct content type
     res.setHeader('Content-Type', 'text/html');
 
-    
+    // Random Trucking Quote Generator
+  if (req.url === '/quote') {
+    const quotes = [
+      "Life is a journey, enjoy the ride.",
+      "The road to success is always under construction.",
+      "Truck drivers are the backbone of the economy."
+    ];
