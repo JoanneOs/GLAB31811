@@ -79,3 +79,6 @@ const server = http.createServer((req, res) => {
       "The road to success is always under construction.",
       "Truck drivers are the backbone of the economy."
     ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    res.end(`<blockquote>"${randomQuote}"</blockquote>`);
+  }
