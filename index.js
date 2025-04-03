@@ -79,6 +79,16 @@ const server = http.createServer((req, res) => {
       "The road to success is always under construction.",
       "Truck drivers are the backbone of the economy."
     ];
+
+    //The code generates a random quote from an array and displays it on the /quote route when accessed in the browser.
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     res.end(`<blockquote>"${randomQuote}"</blockquote>`);
-  }
+  });
+
+  // Server listening on port 3000
+server.listen(3000, () => {
+    console.log('Server is running at http://localhost:3000');
+  });
+
+  //i did file save then nodemon index.js
+  //error missing bra
